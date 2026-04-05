@@ -1,6 +1,6 @@
 {
   "name": "polang",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Tiny i18n library for tiny React webapps",
   "keywords": [
     "lightweight",
