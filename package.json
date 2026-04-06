@@ -1,5 +1,5 @@
 {
-  "name": "polang",
+  "name": "@compilorama/polang",
   "version": "0.1.0",
   "description": "Tiny i18n library for tiny React webapps",
   "keywords": [
@@ -11,6 +11,7 @@
   "license": "MIT",
   "author": "Rafael Camargo <hello@rafaelcamargo.com>",
   "type": "module",
+  "files": ["dist"],
   "main": "dist/cjs/index.js",
   "module": "dist/es6/index.js",
   "exports": {
@@ -20,7 +21,12 @@
   "scripts": {
     "build": "rm -rf dist && babel src --out-dir dist/cjs --env-name cjs --ignore '**/*.test.js','**/services/testing.js' && babel src --out-dir dist/es6 --env-name es6 --ignore '**/*.test.js','**/services/testing.js' && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
     "format": "eslint src",
+    "prepublishOnly": "npm run build",
     "test": "jest"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
