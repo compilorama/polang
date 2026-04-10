@@ -24,11 +24,21 @@ export const translationsMock = {
   'en-US': {
     'hello': 'Welcome!',
     'polang_is_a_tiny_i18n_library': 'Polang is a tiny i18n library.',
-    'locale': 'Locale'
+    'locale': 'Locale',
+    'with_single_variable': 'Hello, {{ name }}!',
+    'with_html': '{{ link }} to learn more',
+    'link_text': 'Click here',
+    'with_multiple_variables': 'Hello {{ name }}, you have {{ count }} messages',
+    'variable_value_missing': 'Well done, {{ nickname }}!'
   },
   'pt-BR': {
     'hello': 'Bem vindo!',
     'polang_is_a_tiny_i18n_library': 'Polang é uma mini biblioteca i18n.',
-    'locale': 'Localização'
+    'locale': 'Localização',
+    'with_single_variable': 'Olá, {{ name }}!',
+    'with_multiple_variables': 'Olá {{ name }}, você tem {{ count }} mensagens',
+    'with_html': '{{ link }} para saber mais',
+    'link_text': 'Clique aqui',
+    'variable_value_missing': 'Bom trabalho, {{ nickname }}!'
   }
 };

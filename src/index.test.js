@@ -71,4 +71,60 @@ describe('Polang', () => {
     mount({ Component });
     expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
   });
+
+  it('should handle translations with a single variable', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('with_single_variable', { name: 'Rafael' })}</p>;
+    };
+    mount({ Component });
+    expect(screen.getByText('Hello, Rafael!')).toBeInTheDocument();
+  });
+
+  it('should handle translations with multiple variables', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('with_multiple_variables', { name: 'Rafael', count: 5 })}</p>;
+    };
+    mount({ Component });
+    expect(screen.getByText('Hello Rafael, you have 5 messages')).toBeInTheDocument();
+  });
+
+  it('should handle translations with multiple variables', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('with_multiple_variables', { name: 'Rafael', count: 5 })}</p>;
+    };
+    mount({ Component });
+    expect(screen.getByText('Hello Rafael, you have 5 messages')).toBeInTheDocument();
+  });
+
+  it('should handle translations with React nodes as variables', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('with_html', { link: <a href="/learn">{t('link_text')}</a> })}</p>;
+    };
+    mount({ Component });
+    const link = screen.getByRole('link', { name: 'Click here' });
+    expect(link.getAttribute('href')).toEqual('/learn');
+    expect(screen.getByText('to learn more')).toBeInTheDocument();
+  });
+
+  it('should return translation key if translation is missing', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('missing_translation')}</p>;
+    };
+    mount({ Component });
+    expect(screen.getByText('missing_translation')).toBeInTheDocument();
+  });
+
+  it('should return translation variable if variable value is missing', async () => {
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <p>{t('variable_value_missing', {})}</p>;
+    };
+    mount({ Component });
+    expect(screen.getByText('Well done, {{ nickname }}!')).toBeInTheDocument();
+  });
 });
