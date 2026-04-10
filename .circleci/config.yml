@@ -65,6 +65,17 @@ jobs:
           name: Test
           command: npm run test -- --coverage --coverageReporters=text-summary
 
+  release:
+    <<: *defaults
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Release
+          command: npm run release
+
 workflows:
   version: 2
 
@@ -80,3 +91,11 @@ workflows:
       - test:
           requires:
             - install
+      - release:
+          requires:
+            - format
+            - build
+            - test
+          filters:
+            branches:
+              only: main

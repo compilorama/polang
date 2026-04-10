@@ -24,7 +24,11 @@
     "build": "rm -rf dist && babel src --out-dir dist/cjs --env-name cjs --ignore '**/*.test.js','**/services/testing.js' && babel src --out-dir dist/es6 --env-name es6 --ignore '**/*.test.js','**/services/testing.js' && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
     "format": "eslint src",
     "prepublishOnly": "npm run build",
+    "release": "semantic-release",
     "test": "jest"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -37,6 +41,10 @@
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.39.4",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -46,6 +54,7 @@
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "semantic-release": "^25.0.3"
   }
 }
