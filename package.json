@@ -1,6 +1,6 @@
 {
   "name": "@compilorama/polang",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tiny i18n library for tiny React webapps",
   "keywords": [
     "lightweight",
