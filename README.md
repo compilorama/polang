@@ -28,7 +28,7 @@ src/
   └── hero/
     ├── hero.js
     ├── hero.test.js
-    └── hero.translations.js  ← lives right next to the component
+    └── hero.t.js  ← lives right next to the component
 ```
 
 A translations file is a plain object keyed by locale code, where each locale maps translation keys to their translated strings.
@@ -76,9 +76,9 @@ Call `useTranslation` with your translations object inside any component wrapped
 
 ```jsx
 import { useTranslation } from '@compilorama/polang';
-import translations from './translations';
+import translations from './hero.t.js';
 
-export default function Home() {
+export default function Hero() {
   const { t } = useTranslation(translations);
   return (
     <>
@@ -149,7 +149,7 @@ const { t } = useTranslation(translations);
 
 ```jsx
 import { useTranslation, LocaleSelect } from '@compilorama/polang';
-import translations from './translations';
+import translations from './header.t.js';
 
 export default function Header() {
   const { t } = useTranslation(translations);
