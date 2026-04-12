@@ -7,7 +7,7 @@ export const useTranslation = translations => {
     const translation = translations[locale.code]?.[key];
     return translation ? parseTranslation(translation, variables) : key;
   };
-  return { t: translate };
+  return { t: translate, locale };
 };
 
 function parseTranslation(translation, variables){
