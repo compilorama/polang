@@ -34,7 +34,7 @@ src/
 A translations file is a plain object keyed by locale code, where each locale maps translation keys to their translated strings.
 
 ```js
-// translations.js
+// hero.t.js
 const translations = {
   'en-US': {
     'hello': 'Welcome!',
