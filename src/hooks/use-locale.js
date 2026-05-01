@@ -6,6 +6,7 @@ export const useLocale = (locales) => {
     setLocale(findLocaleByCode(newLocaleCode, locales));
     storeLocale(newLocaleCode);
     setLocaleSearchParam(newLocaleCode);
+    setHTMLDocumentLanguage(newLocaleCode);
   };
   return { locale, locales, handleLocaleChange };
 };
@@ -25,6 +26,10 @@ function setLocaleSearchParam(locale){
   params.set(getLocaleSearchParamKey(), locale);
   const { origin, pathname } = window.location;
   window.history.replaceState({}, '', `${origin}${pathname}?${params.toString()}`);
+}
+
+function setHTMLDocumentLanguage(localeCode){
+  document.documentElement.lang = localeCode;
 }
 
 function getLocaleSearchParam(){

@@ -50,6 +50,7 @@ describe('Polang', () => {
     await user.selectOptions(screen.getByLabelText('Locale'), 'Português BR');
     expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
     expect(screen.getByText('Polang é uma mini biblioteca i18n.')).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('pt-BR');
   });
 
   it('should set translations according locale search param', async () => {
