@@ -14,7 +14,9 @@ export const useLocale = (locales) => {
 function getInitialLocale(locales){
   const [defaultLocale] = locales;
   const initialLocaleCode = getLocaleSearchParam() || getLocalStoredLocale() || defaultLocale.code;
-  return findLocaleByCode(initialLocaleCode, locales);
+  const locale = findLocaleByCode(initialLocaleCode, locales);
+  setHTMLDocumentLanguage(initialLocaleCode);
+  return locale;
 }
 
 function findLocaleByCode(code, locales){

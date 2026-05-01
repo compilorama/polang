@@ -17,6 +17,7 @@ describe('Polang', () => {
 
   afterEach(() => {
     window.localStorage.removeItem('plocale');
+    document.documentElement.lang = 'en-US';
     clearSearchParams();
   });
 
@@ -61,6 +62,7 @@ describe('Polang', () => {
     };
     mount({ Component });
     expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('pt-BR');
   });
 
   it('should set translations according stored locale', async () => {
