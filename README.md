@@ -18,7 +18,28 @@ Polang requires React 18 or later as a peer dependency.
 
 ## Usage
 
-### 1. Define your translations
+### 1. Wrap your app with `I18nProvider`
+
+Pass the list of supported locales to `I18nProvider`. The **first locale** in the array is used as the **default**.
+
+```jsx
+import { I18nProvider } from '@compilorama/polang';
+
+const locales = [
+  { code: 'en-US', name: 'English US' },
+  { code: 'pt-BR', name: 'Português BR' },
+];
+
+export default function App() {
+  return (
+    <I18nProvider locales={locales}>
+      <YourApp />
+    </I18nProvider>
+  );
+}
+```
+
+### 2. Define your translations
 
 Translations in Polang are component-oriented. Each component owns its translations the same way it owns its styles or unit tests — as a sibling file in the same directory.
 
@@ -49,27 +70,6 @@ const translations = {
 export default translations;
 ```
 
-### 2. Wrap your app with `I18nProvider`
-
-Pass the list of supported locales to `I18nProvider`. The **first locale** in the array is used as the **default**.
-
-```jsx
-import { I18nProvider } from '@compilorama/polang';
-
-const locales = [
-  { code: 'en-US', name: 'English US' },
-  { code: 'pt-BR', name: 'Português BR' },
-];
-
-export default function App() {
-  return (
-    <I18nProvider locales={locales}>
-      <YourApp />
-    </I18nProvider>
-  );
-}
-```
-
 ### 3. Translate strings with `useTranslation`
 
 Call `useTranslation` with your translations object inside any component wrapped by `I18nProvider`. It returns a `t` function that resolves the correct string for the active locale.
@@ -89,7 +89,27 @@ export default function Hero() {
 }
 ```
 
-### 4. Interpolate variables
+### 4. Add a locale selector with `LocaleSelect`
+
+`LocaleSelect` renders a `<select>` element pre-populated with the locales defined in `I18nProvider`. Choosing an option immediately switches the active locale. It accepts any standard `<select>` props.
+
+```jsx
+import { useTranslation, LocaleSelect } from '@compilorama/polang';
+import translations from './header.t.js';
+
+export default function Header() {
+  const { t } = useTranslation(translations);
+  return (
+    <header>
+      <LocaleSelect aria-label={t('locale')} />
+    </header>
+  );
+}
+```
+
+## Advanced Usage
+
+### Interpolate variables
 
 Use `{{ variableName }}` placeholders in your translation strings and pass the values as the second argument to `t`.
 
@@ -121,7 +141,7 @@ Use `{{ variableName }}` placeholders in your translation strings and pass the v
 // → Hello Rafael, you have 5 messages
 ```
 
-### 5. Use React nodes as variable values
+### Use React nodes as variable values
 
 Variable values can be React elements, which lets you embed links or other components inside translated strings.
 
@@ -143,32 +163,18 @@ const { t } = useTranslation(translations);
 // → <a href="/learn">Click here</a> to learn more
 ```
 
-### 6. Add a locale selector with `LocaleSelect`
+## Preferred Language
 
-`LocaleSelect` renders a `<select>` element pre-populated with the locales defined in `I18nProvider`. Choosing an option immediately switches the active locale. It accepts any standard `<select>` props.
+Polang automatically persists the selected locale in two ways so users **see their preferred language across sessions and when opening shared URLs**:
 
-```jsx
-import { useTranslation, LocaleSelect } from '@compilorama/polang';
-import translations from './header.t.js';
-
-export default function Header() {
-  const { t } = useTranslation(translations);
-  return (
-    <header>
-      <LocaleSelect aria-label={t('locale')} />
-    </header>
-  );
-}
-```
-
-### 7. Locale persistence
-
-Polang automatically persists the selected locale in two ways so users **land on their preferred language across sessions and shared URLs**:
-
-- **`localStorage`** — the active locale code is stored under the key `plocale`.
 - **URL search param** — the active locale code is kept in the `?locale=` query parameter.
+- **`localStorage`** — the active locale code is stored under the key `plocale`.
 
-On initialization, Polang checks the URL param first, then `localStorage`, then falls back to the first locale in the array.
+On initialization, Polang detects the preferred locale in the following order:
+1. URL param
+2. Local Storage
+3. Navigator language
+4. If none of the above apply, Polang falls back to the first locale passed to `I18nProvider`.
 
 You can pre-select a locale by setting the search param before the page loads:
 
