@@ -1,4 +1,5 @@
 import { customRender, clearSearchParams, mockSearchParams, screen, translationsMock } from '@src/services/testing';
+import navigatorService from '@src/services/navigator';
 import { I18nProvider, useTranslation, LocaleSelect } from '@src/';
 
 describe('Polang', () => {
@@ -16,8 +17,10 @@ describe('Polang', () => {
   }
 
   afterEach(() => {
+    const defaultLocale = 'en-US';
     window.localStorage.removeItem('plocale');
-    document.documentElement.lang = 'en-US';
+    document.documentElement.lang = defaultLocale;
+    navigatorService.getLanguage = jest.fn(() => defaultLocale);
     clearSearchParams();
   });
 
@@ -73,6 +76,40 @@ describe('Polang', () => {
     };
     mount({ Component });
     expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('pt-BR');
+  });
+
+  it('should set translations according navigator language', async () => {
+    navigatorService.getLanguage = jest.fn(() => 'pt-BR');
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <h1>{t('hello')}</h1>;
+    };
+    mount({ Component });
+    expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('pt-BR');
+  });
+
+  it('should fallback to default locale when navigator language is not included in available locales', async () => {
+    navigatorService.getLanguage = jest.fn(() => 'es-ES');
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <h1>{t('hello')}</h1>;
+    };
+    mount({ Component });
+    expect(screen.getByRole('heading', { name: 'Welcome!' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('en-US');
+  });
+
+  it('should use closest locale when navigator locale partially matches available locales', async () => {
+    navigatorService.getLanguage = jest.fn(() => 'pt-PT');
+    const Component = () => {
+      const { t } = useTranslation(translationsMock);
+      return <h1>{t('hello')}</h1>;
+    };
+    mount({ Component });
+    expect(screen.getByRole('heading', { name: 'Bem vindo!' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toEqual('pt-BR');
   });
 
   it('should handle translations with a single variable', async () => {
