@@ -14,7 +14,7 @@ Most i18n libraries **carry a lot of weight**: complex (and sometimes asynchrono
 npm install @compilorama/polang
 ```
 
-Polang requires React 18 or later as a peer dependency.
+Polang requires React 18 or later.
 
 ## Usage
 
@@ -141,7 +141,7 @@ Use `{{ variableName }}` placeholders in your translation strings and pass the v
 // → Hello Rafael, you have 5 messages
 ```
 
-### Use React nodes as variable values
+### Use JSX as variable values
 
 Variable values can be React elements, which lets you embed links or other components inside translated strings.
 
